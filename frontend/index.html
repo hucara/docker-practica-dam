@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐳 Práctica Docker - Tienda DAM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="docker-icon">🐳</span>
+                <h1>Tienda Docker DAM</h1>
+            </div>
+            <div class="status" id="status">
+                <span class="status-dot"></span>
+                <span class="status-text">Verificando conexión...</span>
+            </div>
+        </header>
+
+        <!-- Info Cards -->
+        <section class="info-cards">
+            <div class="card info-card">
+                <div class="card-icon">🖥️</div>
+                <h3>Frontend</h3>
+                <p>Nginx + HTML/CSS/JS</p>
+                <span class="port">Puerto 8080</span>
+            </div>
+            <div class="card info-card">
+                <div class="card-icon">⚙️</div>
+                <h3>Backend</h3>
+                <p>Node.js + Express</p>
+                <span class="port">Puerto 3000</span>
+            </div>
+            <div class="card info-card">
+                <div class="card-icon">🗄️</div>
+                <h3>Database</h3>
+                <p>MySQL 8.0</p>
+                <span class="port">Puerto 3306</span>
+            </div>
+        </section>
+
+        <!-- Actions -->
+        <section class="actions">
+            <button class="btn btn-primary" onclick="loadProducts()">
+                📦 Cargar Productos
+            </button>
+            <button class="btn btn-secondary" onclick="checkHealth()">
+                🔍 Verificar API
+            </button>
+            <button class="btn btn-success" onclick="openAddModal()">
+                ➕ Añadir Producto
+            </button>
+        </section>
+
+        <!-- Products Grid -->
+        <section class="products-section">
+            <h2>📦 Catálogo de Productos</h2>
+            <div class="products-grid" id="products-grid">
+                <div class="loading-message">
+                    Pulsa "Cargar Productos" para ver el catálogo
+                </div>
+            </div>
+        </section>
+
+        <!-- API Response -->
+        <section class="api-response">
+            <h2>📡 Respuesta de la API</h2>
+            <pre id="api-response">// La respuesta de la API aparecerá aquí</pre>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Práctica Docker - Ciclo Formativo DAM</p>
+            <p>Frontend (Nginx) → Backend (Node.js) → Database (MySQL)</p>
+        </footer>
+    </div>
+
+    <!-- Modal para añadir producto -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>➕ Añadir Nuevo Producto</h2>
+            <form id="addProductForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre *</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio *</label>
+                    <input type="number" id="precio" name="precio" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" id="stock" name="stock" value="0">
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Producto</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

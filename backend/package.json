@@ -1,0 +1,15 @@
+{
+  "name": "backend-docker-practica",
+  "version": "1.0.0",
+  "description": "API REST para práctica de Docker - DAM",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "cors": "^2.8.5"
+  }
+}

@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # BASE DE DATOS - MySQL
+  # ============================================
+  database:
+    image: mysql:8.0
+    container_name: tienda-database
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tienda
+      MYSQL_USER: tienda_user
+      MYSQL_PASSWORD: tienda_password
+    ports:
+      - "3306:3306"
+    volumes:
+      # Script de inicialización
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # Persistencia de datos
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================
+  # BACKEND - Node.js + Express
+  # ============================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: tienda-backend
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      DB_HOST: database
+      DB_USER: root
+      DB_PASSWORD: rootpassword
+      DB_NAME: tienda
+    ports:
+      - "3000:3000"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  # ============================================
+  # FRONTEND - Nginx
+  # ============================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: tienda-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+# ============================================
+# RED
+# ============================================
+networks:
+  app-network:
+    driver: bridge
+    name: tienda-network
+
+# ============================================
+# VOLÚMENES
+# ============================================
+volumes:
+  mysql_data:
+    name: tienda-mysql-data
