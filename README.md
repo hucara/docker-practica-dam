@@ -87,7 +87,7 @@ docker exec -it tienda-backend sh
 ## 📁 Estructura del Proyecto
 
 ```
-docker-practica/
+docker-practica-dam/
 ├── docker-compose.yml
 ├── README.md
 ├── frontend/
