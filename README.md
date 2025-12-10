@@ -29,7 +29,7 @@ Aplicación de tienda online con arquitectura de tres capas:
 
 ```bash
 # Clonar o descargar el proyecto
-cd docker-practica
+cd docker-practica-dam
 
 # Construir y levantar los contenedores
 docker-compose up --build
